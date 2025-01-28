@@ -25,6 +25,25 @@
     </div>
   </div>
 
-  <script src="script.js"></script>
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
+    import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
+    
+    const firebaseConfig = {
+      apiKey: "AIzaSyATtO8m5rfXHN9QQ4zgw_vefZ-eHbju9P0",
+      authDomain: "mylifecanvas-68063.firebaseapp.com",
+      projectId: "mylifecanvas-68063",
+      storageBucket: "mylifecanvas-68063.firebasestorage.app",
+      messagingSenderId: "626386658938",
+      appId: "1:626386658938:web:5896853705a4b0514c3dc3",
+      measurementId: "G-Z1EVN8Z7RC"
+    };
+
+    // Firebase 초기화
+    const app = initializeApp(firebaseConfig);
+    window.db = getFirestore(app);
+  </script>
+  <script src="script.js" type="module"></script>
 </body>
 </html>
