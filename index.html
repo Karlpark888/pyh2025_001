@@ -2,48 +2,78 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <title>생애보 생성 웹앱 (여러 장 업로드)</title>
+  <title>대웅제약 S&OP 분석 리포트</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>생애보 생성 웹앱</h1>
-  
-  <div class="container">
-    <!-- 사진 목록을 담을 컨테이너 -->
-    <div id="photoList"></div>
-    
-    <!-- "사진 추가" 버튼 -->
-    <button id="addPhotoButton">사진 추가</button>
-    
-    <!-- "생애보 생성" 버튼 -->
-    <button id="generateLifeButton" class="generate-button">생애보 생성</button>
-    
-    <!-- 결과 영역 -->
-    <div id="resultContainer">
-      <h2>생애보 결과</h2>
-      <div id="result"></div>
-    </div>
-  </div>
+  <header class="app-header">
+    <h1>대웅제약 S&amp;OP 분석 리포트</h1>
+    <p>매월 S&amp;OP 회의를 위해 4개의 정형 데이터를 업로드하면 제품별 요약 리포트를 자동으로 생성합니다.</p>
+  </header>
 
-  <!-- Firebase SDK -->
-  <script type="module">
-    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
-    import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
-    
-    const firebaseConfig = {
-      apiKey: "AIzaSyATtO8m5rfXHN9QQ4zgw_vefZ-eHbju9P0",
-      authDomain: "mylifecanvas-68063.firebaseapp.com",
-      projectId: "mylifecanvas-68063",
-      storageBucket: "mylifecanvas-68063.firebasestorage.app",
-      messagingSenderId: "626386658938",
-      appId: "1:626386658938:web:5896853705a4b0514c3dc3",
-      measurementId: "G-Z1EVN8Z7RC"
-    };
+  <main class="app-main">
+    <section class="upload-grid">
+      <article class="upload-card" data-required-columns="제품코드,제품명,제품유형,담당,안전재고">
+        <h2>제품 마스터 파일</h2>
+        <p class="hint">필수 칼럼: 제품코드, 제품명, 제품유형, 담당, 안전재고</p>
+        <p class="desc">제품 기본 정보를 포함한 CSV 파일을 업로드하세요.</p>
+        <label class="file-input">
+          <input type="file" id="productMasterInput" accept=".csv" />
+          <span>파일 업로드</span>
+        </label>
+        <p class="file-name" id="productMasterName">업로드된 파일 없음</p>
+      </article>
 
-    // Firebase 초기화
-    const app = initializeApp(firebaseConfig);
-    window.db = getFirestore(app);
-  </script>
+      <article class="upload-card" data-required-columns="제품코드,현재고,입고예정수량,입고예정일">
+        <h2>현재고 및 입고예정</h2>
+        <p class="hint">필수 칼럼: 제품코드, 현재고, 입고예정수량, 입고예정일(YYYY-MM-DD)</p>
+        <p class="desc">현재고와 향후 입고 일정이 포함된 CSV 파일을 업로드하세요.</p>
+        <label class="file-input">
+          <input type="file" id="inventoryInput" accept=".csv" />
+          <span>파일 업로드</span>
+        </label>
+        <p class="file-name" id="inventoryName">업로드된 파일 없음</p>
+      </article>
+
+      <article class="upload-card" data-required-columns="제품코드,월,판매수량">
+        <h2>과거 6개월 판매실적</h2>
+        <p class="hint">필수 칼럼: 제품코드, 월(YYYY-MM), 판매수량</p>
+        <p class="desc">최근 6개월의 실제 판매 실적 CSV 데이터를 업로드하세요.</p>
+        <label class="file-input">
+          <input type="file" id="pastSalesInput" accept=".csv" />
+          <span>파일 업로드</span>
+        </label>
+        <p class="file-name" id="pastSalesName">업로드된 파일 없음</p>
+      </article>
+
+      <article class="upload-card" data-required-columns="제품코드,월,계획수량">
+        <h2>향후 6개월 판매계획</h2>
+        <p class="hint">필수 칼럼: 제품코드, 월(YYYY-MM), 계획수량</p>
+        <p class="desc">향후 6개월 판매 계획 CSV 데이터를 업로드하세요.</p>
+        <label class="file-input">
+          <input type="file" id="futurePlanInput" accept=".csv" />
+          <span>파일 업로드</span>
+        </label>
+        <p class="file-name" id="futurePlanName">업로드된 파일 없음</p>
+      </article>
+    </section>
+
+    <section class="actions">
+      <button id="generateReportButton" class="primary">제품별 분석 리포트 생성</button>
+      <p class="note">* 모든 파일은 UTF-8 CSV 포맷을 권장합니다. Excel 파일은 CSV로 변환 후 업로드하세요.</p>
+    </section>
+
+    <section id="resultContainer" class="result-container hidden">
+      <h2>제품별 분석 결과</h2>
+      <div id="summary" class="summary"></div>
+      <div id="detailedReport" class="detailed-report"></div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <p>ⓒ 2024 Daewoong Pharmaceutical SCM Division</p>
+  </footer>
+
   <script src="script.js" type="module"></script>
 </body>
 </html>
