@@ -1,0 +1,12 @@
+{
+  "name": "daewoong-sop-dashboard",
+  "version": "1.0.0",
+  "description": "S&OP 리포트 생성 웹앱",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT"
+}
